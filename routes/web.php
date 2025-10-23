@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::resource('/clientes', ClienteController::class);
+    Route::resource('/instructores', InstructorController::class)->parameters([
+        'instructores' => 'instructor'
+    ]);;
 });
 
 Route::get('/123', function () {
@@ -32,7 +40,4 @@ Route::get('/123', function () {
 
 
 
-
-
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

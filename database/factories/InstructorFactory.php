@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cliente>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Instructor>
  */
-class ClienteFactory extends Factory
+class InstructorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,12 +19,10 @@ class ClienteFactory extends Factory
         return [
             'nombre' => fake()->name(),
             'apellido' => fake()->lastName(),
-            'edad' => fake()->numberBetween(18, 50),
-            'peso' => fake()->numberBetween(60, 100),
+            'especialidad' => fake()->jobTitle(),
+            'celular' => fake()->phoneNumber(),
             'carnet' => fake()->phoneNumber(),
-            'telefono' => fake()->phoneNumber(),
-            'talla' => fake()->numberBetween(150, 200),
-            'user_id' => 1,
+            'direccion' => fake()->address()
         ];
     }
 }
