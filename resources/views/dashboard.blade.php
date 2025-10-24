@@ -13,6 +13,7 @@
                    <a href="/instructores">Instructores</a>
                    <a href="/equipos">Equipos</a>
                    <a href="/productos">Productos</a>
+                   
                 </div>
             </div>
         </div>

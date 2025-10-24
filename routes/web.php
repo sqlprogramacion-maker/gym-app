@@ -5,6 +5,7 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TipoMembresiaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,7 +27,10 @@ Route::middleware('auth')->group(function () {
     ]);;
     Route::resource('/equipos', EquipoController::class);
     Route::resource('/productos', ProductoController::class);
-    
+
+    // Route::resource('/tipomembresia', TipoMembresiaController::class)->parameters([
+    //     'tipomembresium' => 'tipomembresia'
+    // ]);
 });
 
 Route::get('/123', function () {

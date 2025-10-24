@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Equipos - Nuevo') }}
+            {{ __('Productos - Nuevo') }}
         </h2>
     </x-slot>
 
@@ -30,35 +30,39 @@
                             @enderror
                         </div>
                         <div class="mb-3">
+                            <label for="precio" class="form-label">Precio</label>
+                            <input type="number" class="form-control" name="precio" id="precio"
+                                value="{{ old('precio') }}">
+                            @error('precio')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                             <label for="stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" name="stock" id="stock"
+                                value="{{ old('stock') }}">
+                            @error('stock')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
                             <label for="marca" class="form-label">Marca</label>
-                            <input type="text" class="form-control" name="marca" id="marca" placeholder="marca"
+                            <input type="text" class="form-control" name="marca" id="marca"
                                 value="{{ old('marca') }}">
                             @error('marca')
                                 <small>{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="fecha_compra" class="form-label">Fecha compra</label>
-                            <input type="date" class="form-control" name="fecha_compra" id="fecha_compra"
-                                value="{{ old('fecha_compra') }}">
-                            @error('fecha_compra')
-                                <small>{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="estado" class="form-label">Estado</label>
-                            <select class="form-select" aria-label="Default select example" id="estado" name="estado">
-                                <option selected>Selecciona es estado</option>
-                                <option value="0">Operativo</option>
-                                <option value="1">Mantenimiento</option>
-                                <option value="2">Baja</option>
-                            </select>
-                            @error('estado')
+                            <label for="fecha_vencimiento" class="form-label">Fecha vencimiento</label>
+                            <input type="date" class="form-control" name="fecha_vencimiento" id="fecha_vencimiento"
+                                value="{{ old('fecha_vencimiento') }}">
+                            @error('fecha_vencimiento')
                                 <small>{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="d-flex justify-end gap-4">
-                            <a href="{{ route('equipos.index') }}">CANCELAR</a>
+                            <a href="{{ route('productos.index') }}">CANCELAR</a>
                             <button type="submit">REGISTRAR</button>
                         </div>
                     </form>
