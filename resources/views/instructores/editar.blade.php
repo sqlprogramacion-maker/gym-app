@@ -70,7 +70,7 @@
                         </div>
                         <div class="d-flex justify-end gap-4">
                             <a href="{{ route('instructores.index') }}">CANCELAR</a>
-                            <button type="submit">REGISTRAR</button>
+                            <button type="submit">ACTUALIZAR</button>
                         </div>
                     </form>
                 </div>

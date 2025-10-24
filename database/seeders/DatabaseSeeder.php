@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Cliente;
+use App\Models\Equipo;
 use App\Models\Instructor;
+use App\Models\Producto;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,5 +28,7 @@ class DatabaseSeeder extends Seeder
 
         Cliente::factory(30)->create();
         Instructor::factory(10)->create();
+        Equipo::factory(20)->create();
+        Producto::factory(10)->create();
     }
 }
