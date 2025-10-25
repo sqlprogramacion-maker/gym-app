@@ -161,12 +161,12 @@
                                     <td>
                                         {{ $item->peso }}
                                     </td>
-                                     <td>
+                                    <td>
                                         {{ $item->talla }}
                                     </td>
-                                    <td class="flex gap-6">
+                                    <td class="flex gap-2 items-center">
                                         <a href="{{ route('clientes.edit', $item) }}">editar</a>
-                                        <form action="{{ route('clientes.destroy', $item->id) }}" method="post">
+                                        <form action="{{ route('clientes.destroy', $item->id) }}" method="post" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">Eliminar</button>
