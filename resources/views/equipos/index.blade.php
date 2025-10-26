@@ -1,26 +1,28 @@
 <x-app-layout>
+    </style>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Instructores') }}
+            {{ __('Equipos') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <body>
                 <div class="container">
                     <!-- Header -->
                     <div class="row page-header">
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
-                                <i class="bi bi-people-fill text-primary"></i>
-                                Gestión de Instructores
+                               <i class="bi bi-collection-fill"></i>
+                                Gestión de Equipos
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/instructores/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nuevo Instructor
+                            <a href="/equipos/create" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Nuevo Equipo
                             </a>
                         </div>
                     </div>
@@ -31,23 +33,34 @@
                             <h5 class="card-title mb-3">
                                 <i class="bi bi-funnel"></i> Filtros de búsqueda
                             </h5>
-                            <form action="/instructores" method="GET">
+                            <form action="/equipos" method="GET">
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label for="buscar" class="form-label">
                                             <i class="bi bi-search"></i> Buscar
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
-                                            value="{{ $buscar }}"
-                                            placeholder="Nombre o apellido">
+                                            value="{{ $buscar }}" placeholder="Descripcion o marca">
                                     </div>
+
+                                    {{-- <div class="col-md-3">
+                                        <label for="estado" class="form-label">
+                                            <i class="bi bi-toggle-on"></i> Estado
+                                        </label>
+                                        <select class="form-select" id="estado" name="estado">
+                                            <option value="">Todos los estados</option>
+                                            <option value="1">Activo</option>
+                                            <option value="0">Inactivo</option>
+                                            <option value="0">Inactivo</option>
+                                        </select>
+                                    </div> --}}
 
                                     <div class="col-md-2">
                                         <label for="per_page" class="form-label">
                                             <i class="bi bi-list-ol"></i> Registros
                                         </label>
                                         <select class="form-select" id="porPagina" name="porPagina">
-                                            <option value="10" @selected($porPagina == 10) >10</option>
+                                            <option value="10" @selected($porPagina == 10)>10</option>
                                             <option value="25" @selected($porPagina == 25)>25</option>
                                             <option value="50" @selected($porPagina == 50)>50</option>
                                         </select>
@@ -57,7 +70,7 @@
                                         <button type="submit" class="btn btn-light flex-fill">
                                             <i class="bi bi-search"></i> Buscar
                                         </button>
-                                        <a href="/instructores" class="btn btn-light">
+                                        <a href="/equipos" class="btn btn-light">
                                             <i class="bi bi-arrow-clockwise"></i>
                                         </a>
                                     </div>
@@ -69,38 +82,46 @@
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Especialidad</th>
-                                <th scope="col">Celular</th>
-                                <th scope="col">Carnet</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Marca</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Fecha_compra</th>
+                                <th scope="col">Ultimo Mantenimiento</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($instructores as $item)
+                            @foreach ($equipos as $item)
                                 <tr scope="row">
                                     <td>
                                         {{ $item->id }}
                                     </td>
                                     <td>
-                                        {{ $item->nombre }}
+                                        {{ Str::limit($item->descripcion, 40, '...') }}
                                     </td>
                                     <td>
-                                        {{ $item->apellido }}
+                                        {{ $item->marca }}
                                     </td>
                                     <td>
-                                        {{ $item->especialidad }}
+                                        @if ($item->estado == 0)
+                                            Operativo
+                                        @endif
+                                        @if ($item->estado == 1)
+                                            Mantenimiento
+                                        @endif
+                                        @if ($item->estado == 2)
+                                            Baja
+                                        @endif
                                     </td>
                                     <td>
-                                        {{ $item->celular }}
+                                        {{ $item->fecha_compra }}
                                     </td>
                                     <td>
-                                        {{ $item->carnet }}
+                                        {{ $item->ultimo_mantenimiento ? $item->ultimo_mantenimiento : '------' }}
                                     </td>
                                     <td class="flex gap-6">
-                                        <a href="{{ route('instructores.edit', $item) }}">editar</a>
-                                        <form action="{{ route('instructores.destroy', $item->id) }}" method="post">
+                                        <a href="{{ route('equipos.edit', $item) }}">editar</a>
+                                        <form action="{{ route('equipos.destroy', $item->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">Eliminar</button>
@@ -113,7 +134,7 @@
                     </table>
 
                     <div>
-                        {{ $instructores->links() }}
+                        {{ $equipos->links() }}
                     </div>
                 </div>
             </body>

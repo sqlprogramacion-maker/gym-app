@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TipoMembresiaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,11 +21,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
     Route::resource('/clientes', ClienteController::class);
     Route::resource('/instructores', InstructorController::class)->parameters([
         'instructores' => 'instructor'
     ]);;
+    Route::resource('/equipos', EquipoController::class);
+    Route::resource('/productos', ProductoController::class);
+
+    // Route::resource('/tipomembresia', TipoMembresiaController::class)->parameters([
+    //     'tipomembresium' => 'tipomembresia'
+    // ]);
 });
 
 Route::get('/123', function () {

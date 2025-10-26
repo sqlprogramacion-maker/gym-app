@@ -11,6 +11,9 @@
                 <div class="p-6 text-gray-900">
                    <a href="/clientes">Clientes</a>
                    <a href="/instructores">Instructores</a>
+                   <a href="/equipos">Equipos</a>
+                   <a href="/productos">Productos</a>
+                   
                 </div>
             </div>
         </div>

@@ -58,6 +58,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <body>
                 <div class="container">
                     <!-- Header -->
@@ -89,7 +90,7 @@
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
                                             value="{{ $buscar }}"
-                                            placeholder="Nombre, email, teléfono o documento">
+                                            placeholder="Nombre">
                                     </div>
 
                                     <div class="col-md-3">
@@ -108,7 +109,7 @@
                                             <i class="bi bi-list-ol"></i> Registros
                                         </label>
                                         <select class="form-select" id="porPagina" name="porPagina">
-                                            <option value="10" @selected($porPagina == 10) >10</option>
+                                            <option value="10" @selected($porPagina == 10)>10</option>
                                             <option value="25" @selected($porPagina == 25)>25</option>
                                             <option value="50" @selected($porPagina == 50)>50</option>
                                         </select>
@@ -129,11 +130,13 @@
                     <table class="table mt-2">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
-                                <th scope="col">Edad</th>
                                 <th scope="col">Carnet</th>
+                                <th scope="col">Edad</th>
+                                <th scope="col">Peso (Kg)</th>
+                                <th scope="col">Talla (cm)</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -141,10 +144,16 @@
                             @foreach ($clientes as $item)
                                 <tr scope="row">
                                     <td>
+                                        {{ $item->id }}
+                                    </td>
+                                    <td>
                                         {{ $item->nombre }}
                                     </td>
                                     <td>
                                         {{ $item->apellido }}
+                                    </td>
+                                    <td>
+                                        {{ $item->carnet }}
                                     </td>
                                     <td>
                                         {{ $item->edad }}
@@ -152,8 +161,8 @@
                                     <td>
                                         {{ $item->peso }}
                                     </td>
-                                    <td>
-                                        {{ $item->carnet }}
+                                     <td>
+                                        {{ $item->talla }}
                                     </td>
                                     <td class="flex gap-6">
                                         <a href="{{ route('clientes.edit', $item) }}">editar</a>
