@@ -14,6 +14,7 @@
                    <a href="/equipos">Equipos</a>
                    <a href="/productos">Productos</a>
                    
+                   <a href="/tipomembresia">Membresias</a>
                 </div>
             </div>
         </div>

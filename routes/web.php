@@ -25,12 +25,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('/instructores', InstructorController::class)->parameters([
         'instructores' => 'instructor'
     ]);;
+    
     Route::resource('/equipos', EquipoController::class);
     Route::resource('/productos', ProductoController::class);
 
-    // Route::resource('/tipomembresia', TipoMembresiaController::class)->parameters([
-    //     'tipomembresium' => 'tipomembresia'
-    // ]);
+    Route::get('/tipomembresia', [TipoMembresiaController::class, 'index'])->name('tipomembresia.index');
+    Route::post('/tipomembresia', [TipoMembresiaController::class, 'store'])->name('tipomembresia.store');
+    Route::get('/tipomembresia/create', [TipoMembresiaController::class, 'create'])->name('tipomembresia.create');
+    Route::get('/tipomembresia/{tipomembresia}', [TipoMembresiaController::class, 'show'])->name('tipomembresia.show');
+    Route::put('/tipomembresia', [TipoMembresiaController::class, 'update'])->name('tipomembresia.update');
+    Route::delete('/tipomembresia/{tipomembresia}', [TipoMembresiaController::class, 'destroy'])->name('tipomembresia.destroy');
+    Route::get('/tipomembresia/{tipomembresia}/edit', [TipoMembresiaController::class, 'edit'])->name('tipomembresia.edit');
 });
 
 Route::get('/123', function () {
