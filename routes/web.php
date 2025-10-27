@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\InstructorController;
@@ -36,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/tipomembresia', [TipoMembresiaController::class, 'update'])->name('tipomembresia.update');
     Route::delete('/tipomembresia/{tipomembresia}', [TipoMembresiaController::class, 'destroy'])->name('tipomembresia.destroy');
     Route::get('/tipomembresia/{tipomembresia}/edit', [TipoMembresiaController::class, 'edit'])->name('tipomembresia.edit');
+
+    Route::resource('/asistencias', AsistenciaController::class);
 });
 
 Route::get('/123', function () {

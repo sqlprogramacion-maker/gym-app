@@ -15,6 +15,7 @@
                    <a href="/productos">Productos</a>
                    
                    <a href="/tipomembresia">Membresias</a>
+                   <a href="/asistencias">Asistencias</a>
                 </div>
             </div>
         </div>

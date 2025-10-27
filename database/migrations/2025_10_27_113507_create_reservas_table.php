@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('membresias', function (Blueprint $table) {
+        Schema::create('reservas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('horario_id')->constrained('horarios')->onDelete('cascade');
+            $table->date('fecha');
             $table->tinyInteger('estado');
-            $table->decimal('precio_pagado', 8, 2);
-            $table->foreignId('tipomembresia_id')->constrained('tipo_membresias')->onDelete('cascade');
-            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('membresias');
+        Schema::dropIfExists('reservas');
     }
 };

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Asistencia;
 use App\Models\Cliente;
 use App\Models\Equipo;
 use App\Models\Instructor;
@@ -32,5 +33,7 @@ class DatabaseSeeder extends Seeder
         Equipo::factory(20)->create();
         Producto::factory(10)->create();
         TipoMembresia::factory(5)->create();
+
+        Asistencia::factory(10)->create();
     }
 }
