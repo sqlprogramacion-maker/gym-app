@@ -6,14 +6,29 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        GYM
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('INICIO') }}
+                    </x-nav-link>
+                       <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.index')">
+                        {{ __('CLIENTES') }}
+                    </x-nav-link>
+                       <x-nav-link :href="route('instructores.index')" :active="request()->routeIs('instructores.index')">
+                        {{ __('ENTRENADORES') }}
+                    </x-nav-link>
+                       <x-nav-link :href="route('equipos.index')" :active="request()->routeIs('equipos.index')">
+                        {{ __('EQUIPOS') }}
+                    </x-nav-link>
+                       <x-nav-link :href="route('productos.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('PRODUCTOS') }}
+                    </x-nav-link>
+                       <x-nav-link :href="route('tipomembresia.index')" :active="request()->routeIs('tipomembresia.index')">
+                        {{ __('MEMBRESIAS') }}
                     </x-nav-link>
                 </div>
             </div>
