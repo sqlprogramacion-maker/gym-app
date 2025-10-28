@@ -16,14 +16,9 @@
                     <div class="row page-header">
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
-                               <i class="bi bi-collection-fill"></i>
-                                Gestión de Productos
+                                <i class="bi bi-collection-fill"></i>
+                                Registro de Asistencias
                             </h1>
-                        </div>
-                        <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/productos/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nuevo Producto
-                            </a>
                         </div>
                     </div>
 
@@ -33,14 +28,14 @@
                             <h5 class="card-title mb-3">
                                 <i class="bi bi-funnel"></i> Filtros de búsqueda
                             </h5>
-                            <form action="/productos" method="GET">
+                            <form action="/asistencias" method="GET">
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label for="buscar" class="form-label">
                                             <i class="bi bi-search"></i> Buscar
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
-                                            value="{{ $buscar }}" placeholder="Descripcion o marca">
+                                            value="{{ $buscar }}" placeholder="Carnet o codigo">
                                     </div>
 
                                     {{-- <div class="col-md-3">
@@ -55,22 +50,11 @@
                                         </select>
                                     </div> --}}
 
-                                    <div class="col-md-2">
-                                        <label for="per_page" class="form-label">
-                                            <i class="bi bi-list-ol"></i> Registros
-                                        </label>
-                                        <select class="form-select" id="porPagina" name="porPagina">
-                                            <option value="10" @selected($porPagina == 10)>10</option>
-                                            <option value="25" @selected($porPagina == 25)>25</option>
-                                            <option value="50" @selected($porPagina == 50)>50</option>
-                                        </select>
-                                    </div>
-
                                     <div class="col-md-3 d-flex align-items-end gap-2">
                                         <button type="submit" class="btn btn-light flex-fill">
                                             <i class="bi bi-search"></i> Buscar
                                         </button>
-                                        <a href="/productos" class="btn btn-light">
+                                        <a href="/asistencias" class="btn btn-light">
                                             <i class="bi bi-arrow-clockwise"></i>
                                         </a>
                                     </div>
@@ -78,34 +62,60 @@
                             </form>
                         </div>
                     </div>
+
+                    @if (count($clientes) > 0)
+                        <div class="card p-2">
+                            @foreach ($clientes as $index => $cliente)
+                                @if ($index === 0)
+                                    {{-- Aquí va el código para renderizar el primer objeto --}}
+                                    <div>
+                                        <p><strong>dato: </strong> {{ $cliente->nombre }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->apellido }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->edad }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->peso }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->carnet }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->telefono }}</p>
+                                        <p><strong>dato: </strong> {{ $cliente->talla }}</p>
+                                    </div>
+                                    <div>
+                                        <form action="{{ route('asistencias.store') }}" method="post">
+                                            @csrf
+                                            <input type="number" name="cliente_id" value="{{ $cliente->id }}"
+                                                style="display: none">
+                                            <button type="submit">REGISTRAR INGRESO</button>
+                                        </form>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+
+
+                    <div class="mt-2">Registro de ingresos del dia</div>
                     <table class="table mt-2">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Descripcion</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Precio (Bs)</th>
-                                <th scope="col">Stock</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Edad (Bs)</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($productos as $item)
+                            @foreach ($asistencias as $item)
                                 <tr scope="row">
                                     <td>
                                         {{ $item->id }}
                                     </td>
                                     <td>
-                                        {{ Str::limit($item->descripcion, 40, '...') }}
+                                        {{ $item->cliente->nombre }}
                                     </td>
                                     <td>
-                                        {{ $item->marca }}
+                                        {{ $item->cliente->apellido }}
                                     </td>
                                     <td>
-                                        {{ $item->precio }}
-                                    </td>
-                                    <td>
-                                        {{ $item->stock }}
+                                        {{ $item->cliente->edad }}
                                     </td>
                                     <td class="flex gap-6">
                                         <a href="{{ route('productos.edit', $item) }}">editar</a>
@@ -117,13 +127,12 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
-                    <div>
-                        {{ $productos->links() }}
-                    </div>
                 </div>
+
+
+
             </body>
         </div>
 </x-app-layout>

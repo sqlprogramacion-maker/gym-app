@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asistencia;
+use App\Models\Cliente;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,9 +17,11 @@ class AsistenciaController extends Controller
     {
         $buscar = $request->input('buscar');
 
-        $asistencias = Asistencia::all();
+        $clientes = Cliente::where('carnet', $buscar)->orWhere('id', "{$buscar}")->get();
 
-        return view('asistencias/index', compact('asistencias', 'buscar'));
+        $asistencias = Asistencia::whereDate('fecha', today())->get();
+
+        return view('asistencias/index', compact('asistencias', 'clientes', 'buscar'));
     }
 
     /**
@@ -33,16 +37,22 @@ class AsistenciaController extends Controller
      */
     public function store(Request $request)
     {
-        $asistencia = new Asistencia([
+        $asistencia = new Asistencia($request->validate([
             'cliente_id' => 'required|integer'
-        ]);
+        ]));
 
+        // Verificar si existe un registro de hoy
+        $existe = Asistencia::whereDate('fecha', Carbon::today())->where('cliente_id', $asistencia->cliente_id)->exists();
+
+        if ($existe) {
+            return back()->with('error', 'Ya existe un registro para hoy');
+        }
         $asistencia->user_id = Auth::id();
         $asistencia->fecha = now();
 
         $asistencia->save();
 
-        return redirect()->route('asistencia.index')->with('mensaje', 'Registrado exitosamente');
+        return redirect()->route('asistencias.index')->with('mensaje', 'Registrado exitosamente');
     }
 
     /**
