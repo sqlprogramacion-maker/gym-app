@@ -99,7 +99,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Edad (Bs)</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col">Carnet</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,14 +117,10 @@
                                     <td>
                                         {{ $item->cliente->edad }}
                                     </td>
-                                    <td class="flex gap-6">
-                                        <a href="{{ route('productos.edit', $item) }}">editar</a>
-                                        <form action="{{ route('productos.destroy', $item->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit">Eliminar</button>
-                                        </form>
+                                     <td>
+                                        {{ $item->cliente->carnet }}
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>

@@ -10,5 +10,23 @@ class Membresia extends Model
     /** @use HasFactory<\Database\Factories\MembresiaFactory> */
     use HasFactory;
 
+    const ESTADO_ACTIVO = 'activo';
+    const ESTADO_PENDIENTE = 'pendiente';
+    const ESTADO_CANCELADO = 'cancelado';
+    
+    const ESTADOS = [
+        self::ESTADO_ACTIVO => 'Activo',
+        self::ESTADO_PENDIENTE => 'Pendiente',
+        self::ESTADO_CANCELADO => 'Cancelado',
+    ];
+
     protected $fillable =  ['fecha_inicio', 'fecha_fin', 'estado', 'precio_pagado', 'tipomembresia_id', 'cliente_id'];
+
+    public function cliente(){
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function tipomembresia(){
+        return $this->belongsTo(TipoMembresia::class);
+    }
 }
