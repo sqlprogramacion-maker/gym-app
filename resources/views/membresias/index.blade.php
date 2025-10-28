@@ -126,6 +126,7 @@
                             </form>
                         </div>
                     </div>
+
                     <table class="table mt-2">
                         <thead>
                             <tr>
@@ -152,29 +153,46 @@
                                     <td>
                                         {{ $item->cliente->carnet }}
                                     </td>
-                                     <td>
+                                    <td>
                                         {{ $item->tipomembresia->nombre }}
                                     </td>
-                                   
+
                                     <td>
                                         {{ $item->tipomembresia->meses }}
                                     </td>
                                     <td>
                                         {{ $item->precio_pagado }}
                                     </td>
-                                     <td>
+                                    <td>
                                         {{ $item->tipomembresia->precio }}
                                     </td>
-                                     <td>
+                                    <td>
                                         {{ $item->estado }}
                                     </td>
                                     <td class="flex gap-2 items-center">
-                                        <a href="{{ route('clientes.edit', $item) }}">mostrar</a>
+                                        <button type="button" class="btn-info-modal" data-id="{{ $item->id }}"
+                                            data-nombre="{{ $item->cliente->nombre }}"
+                                            data-apellido="{{ $item->cliente->apellido }}"
+                                            data-edad="{{ $item->cliente->edad }}"
+                                            data-peso="{{ $item->cliente->peso }}"
+                                            data-carnet="{{ $item->cliente->carnet }}"
+                                            data-telefono="{{ $item->cliente->telefono }}"
+                                            data-talla="{{ $item->cliente->talla }}"
+                                            data-mnombre="{{ $item->tipomembresia->nombre }}"
+                                            data-mmeses="{{ $item->tipomembresia->meses }}"
+                                            data-mprecio="{{ $item->tipomembresia->precio }}"
+                                            data-mbeneficios="{{ $item->tipomembresia->beneficios }}"
+                                            data-fechainicio="{{ $item->fecha_inicio }}"
+                                            data-fechafin="{{ $item->fecha_fin }}"
+                                            data-estado="{{ $item->estado }}"
+                                            data-preciopagado="{{ $item->precio_pagado }}"
+                                            >
+                                            <i class="bi bi-info-circle"></i> Info
+                                        </button>
                                         <a href="">pagar</a>
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
 
@@ -182,7 +200,86 @@
                         {{ $membresias->links() }}
                     </div>
                 </div>
+
+                <!-- MODAL INFO -->
+                <div class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="modalInfoLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalInfoLabel">Información Detallada</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Datos del cliente</strong></p>
+                                        <p><strong>ID:</strong> <span id="modal-id"></span></p>
+                                        <p><strong>Nombre:</strong> <span id="modal-nombre"></span></p>
+                                        <p><strong>Apellido:</strong> <span id="modal-apellido"></span></p>
+                                        <p><strong>Edad:</strong> <span id="modal-edad"></span></p>
+                                        <p><strong>Peso:</strong> <span id="modal-peso"></span> Kg</p>
+                                        <p><strong>Carnet:</strong> <span id="modal-carnet"></span></p>
+                                        <p><strong>Telefono:</strong> <span id="modal-telefono"></span></p>
+                                        <p><strong>Talla:</strong> <span id="modal-talla"></span> cm</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Datos de la membresia</strong></p>
+                                        <p><strong>Membresia:</strong> <span id="modal-mnombre"></span></p>
+                                        <p><strong>Duracion:</strong> <span id="modal-mmeses"></span></p>
+                                        <p><strong>Precio:</strong> <span id="modal-mprecio"></span></p>
+                                        <p><strong>Beneficios:</strong> <span id="modal-mbeneficios"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Membresia y estado de pago</strong> </p>
+                                        <p><strong>Fecha inicio:</strong> <span id="modal-fechainicio"></span></p>
+                                        <p><strong>Fecha fin:</strong> <span id="modal-fechafin"></span></p>
+                                        <p><strong>Estado:</strong> <span id="modal-estado"></span></p>
+                                        <p><strong>Fecha precio pagado:</strong> <span id="modal-preciopagado"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </body>
         </div>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const botonesInfo = document.querySelectorAll('.btn-info-modal');
+            const modal = new bootstrap.Modal(document.getElementById('modalInfo'));
+
+            botonesInfo.forEach(boton => {
+                boton.addEventListener('click', function() {
+                    document.getElementById('modal-id').textContent = this.dataset.id;
+                    document.getElementById('modal-nombre').textContent = this.dataset.nombre;
+                    document.getElementById('modal-apellido').textContent = this.dataset.apellido;
+                    document.getElementById('modal-edad').textContent = this.dataset.edad;
+                    document.getElementById('modal-peso').textContent = this.dataset.peso;
+                    document.getElementById('modal-carnet').textContent = this.dataset.carnet;
+                    document.getElementById('modal-telefono').textContent = this.dataset.telefono;
+                    document.getElementById('modal-talla').textContent = this.dataset.talla;
+                    document.getElementById('modal-mnombre').textContent = this.dataset.mnombre;
+                    document.getElementById('modal-mmeses').textContent = this.dataset.mmeses;
+                    document.getElementById('modal-mprecio').textContent = this.dataset.mprecio;
+                    document.getElementById('modal-mbeneficios').textContent = this.dataset.mbeneficios;
+                    document.getElementById('modal-fechainicio').textContent = this.dataset.fechainicio;
+                    document.getElementById('modal-fechafin').textContent = this.dataset.fechafin;
+                    document.getElementById('modal-estado').textContent = this.dataset.estado;
+                    document.getElementById('modal-preciopagado').textContent = this.dataset.preciopagado;
+
+
+                    modal.show();
+                });
+            });
+        });
+    </script>
 </x-app-layout>
-nombre
