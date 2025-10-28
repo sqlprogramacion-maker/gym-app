@@ -6,6 +6,7 @@ use App\Models\Asistencia;
 use App\Models\Cliente;
 use App\Models\Equipo;
 use App\Models\Instructor;
+use App\Models\Membresia;
 use App\Models\Producto;
 use App\Models\TipoMembresia;
 use App\Models\User;
@@ -35,5 +36,6 @@ class DatabaseSeeder extends Seeder
         TipoMembresia::factory(5)->create();
 
         Asistencia::factory(10)->create();
+        Membresia::factory(5)->create();
     }
 }

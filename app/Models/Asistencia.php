@@ -11,4 +11,8 @@ class Asistencia extends Model
     use HasFactory;
 
     protected $fillable = ['fecha', 'cliente_id', 'user_id'];
+
+    public function cliente(){
+        return $this->belongsTo(Cliente::class);
+    }
 }

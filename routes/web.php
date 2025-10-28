@@ -4,6 +4,7 @@ use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\MembresiaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipoMembresiaController;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tipomembresia/{tipomembresia}/edit', [TipoMembresiaController::class, 'edit'])->name('tipomembresia.edit');
 
     Route::resource('/asistencias', AsistenciaController::class);
+    Route::resource('/membresias', MembresiaController::class);
 });
 
 Route::get('/123', function () {

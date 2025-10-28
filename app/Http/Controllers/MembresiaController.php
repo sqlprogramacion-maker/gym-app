@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Membresia;
+use App\Models\TipoMembresia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MembresiaController extends Controller
@@ -10,9 +13,28 @@ class MembresiaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $buscar = $request->input('buscar');
+        $porPagina = $request->input('porPagina', 10);
+
+        //Query del cliente
+        //$query = Membresia::query();
+        $query = Membresia::with('cliente');
+
+        // Aplicar filtros de busqueda si existen
+        if($buscar){
+            $query->whereHas('cliente', function ($q) use ($request) {
+                $q->where('apellido', 'like', '%' . $request->buscar . '%')
+                  ->orWhere('carnet', 'like', '%' . $request->buscar . '%');
+            });
+        }
+
+        // Aplicar filtro de estado
+        $membresias = $query->orderBy('created_at', 'desc')
+            ->paginate($porPagina);
+
+        return view('membresias/index', compact('membresias', 'buscar', 'porPagina'));
     }
 
     /**
@@ -20,7 +42,9 @@ class MembresiaController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        $tipomembresias = TipoMembresia::all();
+        return view('membresias/crear', compact('clientes', 'tipomembresias'));
     }
 
     /**
@@ -28,7 +52,21 @@ class MembresiaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $membresia = new Membresia($request->validate([
+            'fecha_inicio' => 'required|date',
+            'precio_pagado' => 'numeric|decimal:0,2',
+            'tipomembresia_id' => 'required|integer',
+            'cliente_id' => 'required|integer'
+        ]));
+
+        $tipomembresia = TipoMembresia::findOrFail($membresia->tipomembresia_id);
+
+        $membresia->fecha_fin = Carbon::parse($membresia->fecha_inicio)->addMonths($tipomembresia->meses);
+
+        $membresia->save();
+
+        return redirect()->route('membresias.index')->with('mensaje', 'Asignado exitosamente.');
     }
 
     /**

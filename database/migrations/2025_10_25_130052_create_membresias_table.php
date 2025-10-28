@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->tinyInteger('estado');
-            $table->decimal('precio_pagado', 8, 2);
+            $table->string('estado')->default('pendiente');
+            $table->decimal('precio_pagado', 8, 2)->default(0);
             $table->foreignId('tipomembresia_id')->constrained('tipo_membresias')->onDelete('cascade');
-            $table->foreignId('clientes_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
             $table->timestamps();
         });
     }

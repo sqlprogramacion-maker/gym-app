@@ -11,4 +11,12 @@ class Cliente extends Model
     use HasFactory;
 
     protected $fillable = ['nombre', 'apellido', 'edad', 'peso', 'carnet', 'telefono', 'talla', 'user_id'];
+
+    public function membresias(){
+        return $this->hasMany(Membresia::class);
+    }
+
+    public function asistencias(){
+        return $this->hasMany(Asistencia::class);
+    }
 }
