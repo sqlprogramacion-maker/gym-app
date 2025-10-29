@@ -64,7 +64,7 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
-        //
+        return view('equipos/mostrar', compact('equipo'));
     }
 
     /**

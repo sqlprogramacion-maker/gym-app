@@ -28,7 +28,11 @@ class MantenimientoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mantenimiento = new Mantenimiento($request->validate([
+            ''
+        ]));
+
+        return redirect()->route('equipos.show', $mantenimiento->equipo_id)->with('mensaje', 'Registrado existamente');
     }
 
     /**

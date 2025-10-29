@@ -11,4 +11,12 @@ class Equipo extends Model
     use HasFactory;
 
     protected $fillable = ['descripcion', 'marca', 'fecha_compra', 'estado', 'ultimo_mantenimiento', 'user_id'];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    
+    public function mantenimientos(){
+        return $this->hasMany(Mantenimiento::class);
+    }
 }

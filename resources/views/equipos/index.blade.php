@@ -86,7 +86,6 @@
                                 <th scope="col">Marca</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Fecha_compra</th>
-                                <th scope="col">Ultimo Mantenimiento</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -116,10 +115,8 @@
                                     <td>
                                         {{ $item->fecha_compra }}
                                     </td>
-                                    <td>
-                                        {{ $item->ultimo_mantenimiento ? $item->ultimo_mantenimiento : '------' }}
-                                    </td>
                                     <td class="flex gap-6">
+                                        <a href="{{ route('equipos.show', $item) }}">mantenimiento</a>
                                         <a href="{{ route('equipos.edit', $item) }}">editar</a>
                                         <form action="{{ route('equipos.destroy', $item->id) }}" method="post">
                                             @csrf

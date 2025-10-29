@@ -8,6 +8,7 @@ use App\Http\Controllers\MembresiaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipoMembresiaController;
+use App\Models\Mantenimiento;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/asistencias', AsistenciaController::class);
     Route::resource('/membresias', MembresiaController::class);
+    Route::resource('/mantenimientos', Mantenimiento::class)->only('store', 'delete');
 });
 
 Route::get('/123', function () {
@@ -48,7 +50,7 @@ Route::get('/123', function () {
 });
 
 Route::get('/home', function () {
-    return "esta es la home";
+    return view('home');
 });
 
 Route::get('/123', function () {
