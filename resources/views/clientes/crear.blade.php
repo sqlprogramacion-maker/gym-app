@@ -40,14 +40,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="edad" class="form-label">Edad</label>
-                            <input type="number" class="form-control" name="edad" id="edad" value="{{ old('edad') }}">
+                            <input type="number" class="form-control" name="edad" id="edad"
+                                value="{{ old('edad') }}">
                             @error('edad')
                                 <small>{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="peso" class="form-label">Peso</label>
-                            <input type="number" class="form-control" name="peso" id="peso" value="{{ old('peso') }}">
+                            <input type="number" class="form-control" name="peso" id="peso"
+                                value="{{ old('peso') }}">
                             @error('peso')
                                 <small>{{ $message }}</small>
                             @enderror
@@ -62,14 +64,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Telefono</label>
-                            <input type="number" class="form-control" name="telefono" id="telefono" value="{{ old('telefono') }}">
+                            <input type="number" class="form-control" name="telefono" id="telefono"
+                                value="{{ old('telefono') }}">
                             @error('telefono')
                                 <small>{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="talla" class="form-label">Talla</label>
-                            <input type="number" class="form-control" name="talla" id="talla" value="{{ old('talla') }}">
+                            <input type="number" class="form-control" name="talla" id="talla"
+                                value="{{ old('talla') }}">
                             @error('talla')
                                 <small>{{ $message }}</small>
                             @enderror
@@ -82,6 +86,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </x-app-layout>
