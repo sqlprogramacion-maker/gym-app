@@ -1,55 +1,5 @@
 <x-app-layout>
-    {{-- <style>
-        input {
-            border-radius: 1em;
-        }
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        }
-
-        .table thead th {
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #dee2e6;
-            font-weight: 600;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-        }
-
-        .filter-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-card .form-label {
-            color: white;
-            font-weight: 500;
-        }
-
-        .filter-card .form-control,
-        .filter-card .form-select {
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .btn-action {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .results-info {
-            font-size: 0.9rem;
-            color: #6c757d;
-        } --}}
-    </style>
-
+      </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Clientes') }}
