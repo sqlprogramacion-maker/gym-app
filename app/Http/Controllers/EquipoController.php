@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipo;
+use App\Models\Mantenimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -102,5 +103,20 @@ class EquipoController extends Controller
         $equipo->delete();
 
         return redirect()->route('equipos.index')->with('mensaje', 'Eliminado exitosamente');
+    }
+
+    public function mantenimientoStore(Request $request, int $id){
+        $mantenimiento = new Mantenimiento($request->validate([
+            'descripcion' => 'required',
+            'costo' => 'required|numeric',
+            'fecha' => 'required|date',
+            'tipo_mantenimiento' => 'required|numeric'
+        ]));
+
+        $mantenimiento->equipo_id = $id;
+
+        $mantenimiento->save();
+
+        return redirect()->route('equipos.show', $id)->with('mensaje', 'Registrado existamente');
     }
 }

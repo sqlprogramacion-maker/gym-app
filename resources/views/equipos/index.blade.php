@@ -116,7 +116,7 @@
                                         {{ $item->fecha_compra }}
                                     </td>
                                     <td class="flex gap-6">
-                                        <a href="{{ route('equipos.show', $item) }}">mantenimiento</a>
+                                        <a href="{{ route('equipos.show', $item) }}">info</a>
                                         <a href="{{ route('equipos.edit', $item) }}">editar</a>
                                         <form action="{{ route('equipos.destroy', $item->id) }}" method="post">
                                             @csrf
@@ -136,4 +136,5 @@
                 </div>
             </body>
         </div>
+    </div>
 </x-app-layout>

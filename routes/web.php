@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     ]);;
     
     Route::resource('/equipos', EquipoController::class);
+    Route::post('/equipos/{equipo}/mantenimiento', [EquipoController::class, 'mantenimientoStore'])->name('equipos.mantenimiento.store');
     Route::resource('/productos', ProductoController::class);
 
     Route::get('/tipomembresia', [TipoMembresiaController::class, 'index'])->name('tipomembresia.index');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/asistencias', AsistenciaController::class);
     Route::resource('/membresias', MembresiaController::class);
-    Route::resource('/mantenimientos', Mantenimiento::class)->only('store', 'delete');
+    Route::resource('/mantenimientos', Mantenimiento::class);
 });
 
 Route::get('/123', function () {

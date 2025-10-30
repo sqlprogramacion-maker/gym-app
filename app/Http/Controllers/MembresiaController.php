@@ -16,6 +16,7 @@ class MembresiaController extends Controller
     public function index(Request $request)
     {
         $buscar = $request->input('buscar');
+        $estado = $request->input("estado");
         $porPagina = $request->input('porPagina', 10);
 
         //Query del cliente
@@ -26,15 +27,19 @@ class MembresiaController extends Controller
         if($buscar){
             $query->whereHas('cliente', function ($q) use ($request) {
                 $q->where('apellido', 'like', '%' . $request->buscar . '%')
-                  ->orWhere('carnet', 'like', '%' . $request->buscar . '%');
+                  ->orWhere('carnet', 'like', '%' . $request->buscar . '%')
+                  ;
             });
         }
 
+        if($estado){
+            $query->where('estado', $estado);
+        }
         // Aplicar filtro de estado
         $membresias = $query->orderBy('created_at', 'desc')
             ->paginate($porPagina);
 
-        return view('membresias/index', compact('membresias', 'buscar', 'porPagina'));
+        return view('membresias/index', compact('membresias', 'buscar', 'estado', 'porPagina'));
     }
 
     /**

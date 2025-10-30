@@ -165,6 +165,7 @@
                                         {{ $item->talla }}
                                     </td>
                                     <td class="flex gap-2 items-center">
+                                        <a href="{{ route('clientes.show', $item) }}">info</a>
                                         <a href="{{ route('clientes.edit', $item) }}">editar</a>
                                         <form action="{{ route('clientes.destroy', $item->id) }}" method="post" class="inline">
                                             @csrf

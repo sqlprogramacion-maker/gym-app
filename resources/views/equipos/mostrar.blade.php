@@ -32,58 +32,102 @@
                             <p><strong>Registrado por: </strong>{{ $equipo->user->name }}</p>
                         </div>
                         <br>
-                        <div>
-                            <h2><strong>Registrar Mantenimiento</strong></h2>
+                        <div><a href="/equipos">Regresar</a> <button id="openModalMantenimiento" class="btn btn-primary">Registrar Mantenimiento</button>
                         </div>
-                        <div class="card p-4">
-                            <form action="{{ route('mantenimientos.store') }}" method="post">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="descripcion" class="form-label">Descripcion</label>
-                                    <textarea class="form-control" id="descripcion" rows="3" name="descripcion">{{ old('descripcion') }}</textarea>
-                                    @error('descripcion')
-                                        <small>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="costo" class="form-label">Costo</label>
-                                    <input type="text" class="form-control" name="costo" id="costo"
-                                        placeholder="costo" value="{{ old('costo') }}">
-                                    @error('costo')
-                                        <small>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="tipo_mantenimiento" class="form-label">Tipo Mantenimiento</label>
-                                    <select class="form-select" aria-label="Default select example" id="estado"
-                                        name="estado">
-                                        <option selected>Selecciona el tipo</option>
-                                        <option value="0">Operativo</option>
-                                        <option value="1">Mantenimiento</option>
-                                    </select>
-                                    @error('tipo_mantenimiento')
-                                        <small>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fecha" class="form-label">Fecha Mantenimiento</label>
-                                    <input type="date" class="form-control" name="fecha" id="fecha"
-                                        value="{{ old('fecha') }}">
-                                    @error('fecha')
-                                        <small>{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" name="cliente_id" id="cliente_id"
-                                        value="{{ old('cliente_id', $equipo->id) }}" style="display: none">
-                                </div>
-                                <div>
-                                    <button type="submit">Registrar</button>
-                                </div>
-                            </form>
-                        </div>
+                        <h2><strong>Historial de mantenimiento</strong></h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">costo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($equipo->mantenimientos as $item)
+                                    <tr>
+                                        <th scope="row">{{ $item->id }}</th>
+                                        <td>{{ $item->descripcion }}</td>
+                                        <td>{{ $item->fecha }}</td>
+                                        <td>{{ $item->costo }} Bs.</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </body>
         </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Registrar mantenimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('equipos.mantenimiento.store', $equipo->id) }}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripcion</label>
+                            <textarea class="form-control" id="descripcion" rows="3" name="descripcion">{{ old('descripcion') }}</textarea>
+                            @error('descripcion')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="costo" class="form-label">Costo</label>
+                            <input type="text" class="form-control" name="costo" id="costo" placeholder="costo"
+                                value="{{ old('costo') }}">
+                            @error('costo')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo_mantenimiento" class="form-label">Tipo Mantenimiento</label>
+                            <select class="form-select" aria-label="Default select example" id="estado"
+                                name="tipo_mantenimiento">
+                                <option selected>Selecciona el tipo</option>
+                                <option value="0">Preventivo</option>
+                                <option value="1">Correctivo</option>
+                            </select>
+                            @error('tipo_mantenimiento')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha Mantenimiento</label>
+                            <input type="date" class="form-control" name="fecha" id="fecha"
+                                value="{{ old('fecha') }}">
+                            @error('fecha')
+                                <small>{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="cliente_id" id="cliente_id"
+                                value="{{ old('cliente_id', $equipo->id) }}" style="display: none">
+                        </div>
+                        <div>
+                            <button type="submit">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const openModalButton = document.getElementById('openModalMantenimiento');
+            const myModalElement = document.getElementById('myModal');
+            const myModal = new bootstrap.Modal(myModalElement);
+
+            openModalButton.addEventListener('click', function() {
+                myModal.show();
+            });
+        });
+    </script>
 </x-app-layout>

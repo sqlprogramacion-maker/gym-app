@@ -98,8 +98,9 @@
                                         </label>
                                         <select class="form-select" id="estado" name="estado">
                                             <option value="">Todos los estados</option>
-                                            <option value="1">Activo</option>
-                                            <option value="0">Inactivo</option>
+                                            <option value="pendiente" @selected($estado == 'pendiente')>Pendiente</option>
+                                            <option value="activo"  @selected($estado == 'activo')>Inactivo</option>
+                                            <option value="cancelado"  @selected($estado == 'cancelado')>Cancelado</option>
                                         </select>
                                     </div>
 
