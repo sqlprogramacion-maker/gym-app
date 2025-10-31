@@ -16,14 +16,14 @@
                     <div class="row page-header">
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
-                               <i class="bi bi-collection-fill"></i>
+                                <i class="bi bi-collection-fill"></i>
                                 Gestión de Productos
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/productos/create" class="btn btn-primary">
+                            <x-link-button :href="route('productos.create')">
                                 <i class="bi bi-plus-circle"></i> Nuevo Producto
-                            </a>
+                            </x-link-button>
                         </div>
                     </div>
 

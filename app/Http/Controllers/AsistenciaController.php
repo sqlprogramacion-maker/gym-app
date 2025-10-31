@@ -42,11 +42,12 @@ class AsistenciaController extends Controller
         ]));
 
         // Verificar si existe un registro de hoy
-        $existe = Asistencia::whereDate('fecha', Carbon::today())->where('cliente_id', $asistencia->cliente_id)->exists();
+        $existe = Asistencia::whereDate('fecha', now())->where('cliente_id', $asistencia->cliente_id)->exists();
 
         if ($existe) {
             return back()->with('error', 'Ya existe un registro para hoy');
         }
+        
         $asistencia->user_id = Auth::id();
         $asistencia->fecha = now();
 

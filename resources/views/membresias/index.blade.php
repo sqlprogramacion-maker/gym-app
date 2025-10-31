@@ -70,9 +70,9 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/membresias/create" class="btn btn-primary">
+                            <x-link-button :href="route('membresias.create')">
                                 <i class="bi bi-plus-circle"></i> Asignar Membresia
-                            </a>
+                            </x-link-button>
                         </div>
                     </div>
 
@@ -99,8 +99,8 @@
                                         <select class="form-select" id="estado" name="estado">
                                             <option value="">Todos los estados</option>
                                             <option value="pendiente" @selected($estado == 'pendiente')>Pendiente</option>
-                                            <option value="activo"  @selected($estado == 'activo')>Inactivo</option>
-                                            <option value="cancelado"  @selected($estado == 'cancelado')>Cancelado</option>
+                                            <option value="activo" @selected($estado == 'activo')>Inactivo</option>
+                                            <option value="cancelado" @selected($estado == 'cancelado')>Cancelado</option>
                                         </select>
                                     </div>
 
@@ -184,10 +184,8 @@
                                             data-mprecio="{{ $item->tipomembresia->precio }}"
                                             data-mbeneficios="{{ $item->tipomembresia->beneficios }}"
                                             data-fechainicio="{{ $item->fecha_inicio }}"
-                                            data-fechafin="{{ $item->fecha_fin }}"
-                                            data-estado="{{ $item->estado }}"
-                                            data-preciopagado="{{ $item->precio_pagado }}"
-                                            >
+                                            data-fechafin="{{ $item->fecha_fin }}" data-estado="{{ $item->estado }}"
+                                            data-preciopagado="{{ $item->precio_pagado }}">
                                             <i class="bi bi-info-circle"></i> Info
                                         </button>
                                         <a href="">pagar</a>
@@ -237,7 +235,8 @@
                                         <p><strong>Fecha inicio:</strong> <span id="modal-fechainicio"></span></p>
                                         <p><strong>Fecha fin:</strong> <span id="modal-fechafin"></span></p>
                                         <p><strong>Estado:</strong> <span id="modal-estado"></span></p>
-                                        <p><strong>Fecha precio pagado:</strong> <span id="modal-preciopagado"></span></p>
+                                        <p><strong>Fecha precio pagado:</strong> <span id="modal-preciopagado"></span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -250,7 +249,7 @@
                 </div>
             </body>
         </div>
-        
+
     </div>
 
     <script>
@@ -271,11 +270,14 @@
                     document.getElementById('modal-mnombre').textContent = this.dataset.mnombre;
                     document.getElementById('modal-mmeses').textContent = this.dataset.mmeses;
                     document.getElementById('modal-mprecio').textContent = this.dataset.mprecio;
-                    document.getElementById('modal-mbeneficios').textContent = this.dataset.mbeneficios;
-                    document.getElementById('modal-fechainicio').textContent = this.dataset.fechainicio;
+                    document.getElementById('modal-mbeneficios').textContent = this.dataset
+                        .mbeneficios;
+                    document.getElementById('modal-fechainicio').textContent = this.dataset
+                        .fechainicio;
                     document.getElementById('modal-fechafin').textContent = this.dataset.fechafin;
                     document.getElementById('modal-estado').textContent = this.dataset.estado;
-                    document.getElementById('modal-preciopagado').textContent = this.dataset.preciopagado;
+                    document.getElementById('modal-preciopagado').textContent = this.dataset
+                        .preciopagado;
 
 
                     modal.show();

@@ -21,9 +21,9 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/tipomembresia/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nueva Membresia
-                            </a>
+                             <x-link-button :href="route('tipomembresia.create')">
+                                 <i class="bi bi-plus-circle"></i> Nuevo Membresia
+                            </x-link-button>
                         </div>
                     </div>
 

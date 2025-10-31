@@ -8,6 +8,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <body>
                 <div class="container">
                     <!-- Header -->
@@ -15,13 +16,13 @@
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
                                 <i class="bi bi-people-fill text-primary"></i>
-                                Gestión de Instructores
+                                Gestión de Entrenadores
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/instructores/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nuevo Instructor
-                            </a>
+                            <x-link-button :href="route('instructores.create')">
+                                <i class="bi bi-plus-circle"></i> Nuevo Entrenador
+                            </x-link-button>
                         </div>
                     </div>
 
@@ -38,8 +39,7 @@
                                             <i class="bi bi-search"></i> Buscar
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
-                                            value="{{ $buscar }}"
-                                            placeholder="Nombre o apellido">
+                                            value="{{ $buscar }}" placeholder="Nombre o apellido">
                                     </div>
 
                                     <div class="col-md-2">
@@ -47,7 +47,7 @@
                                             <i class="bi bi-list-ol"></i> Registros
                                         </label>
                                         <select class="form-select" id="porPagina" name="porPagina">
-                                            <option value="10" @selected($porPagina == 10) >10</option>
+                                            <option value="10" @selected($porPagina == 10)>10</option>
                                             <option value="25" @selected($porPagina == 25)>25</option>
                                             <option value="50" @selected($porPagina == 50)>50</option>
                                         </select>

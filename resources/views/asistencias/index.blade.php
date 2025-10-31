@@ -69,20 +69,21 @@
                                 @if ($index === 0)
                                     {{-- Aquí va el código para renderizar el primer objeto --}}
                                     <div>
-                                        <p><strong>dato: </strong> {{ $cliente->nombre }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->apellido }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->edad }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->peso }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->carnet }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->telefono }}</p>
-                                        <p><strong>dato: </strong> {{ $cliente->talla }}</p>
+                                        <p><strong>Nombre: </strong> {{ $cliente->nombre }}</p>
+                                        <p><strong>Apellido: </strong> {{ $cliente->apellido }}</p>
+                                        <p><strong>Edad: </strong> {{ $cliente->edad }}</p>
+                                        <p><strong>Peso: </strong> {{ $cliente->peso }}</p>
+                                        <p><strong>Carnet: </strong> {{ $cliente->carnet }}</p>
+                                        <p><strong>Telefono: </strong> {{ $cliente->telefono }}</p>
+                                        <p><strong>Talla: </strong> {{ $cliente->talla }}</p>
                                     </div>
                                     <div>
                                         <form action="{{ route('asistencias.store') }}" method="post">
                                             @csrf
                                             <input type="number" name="cliente_id" value="{{ $cliente->id }}"
                                                 style="display: none">
-                                            <button type="submit">REGISTRAR INGRESO</button>
+                                            <x-primary-button>REGISTRAR INGRESO</x-primary-button>
+
                                         </form>
                                     </div>
                                 @endif
@@ -117,10 +118,10 @@
                                     <td>
                                         {{ $item->cliente->edad }}
                                     </td>
-                                     <td>
+                                    <td>
                                         {{ $item->cliente->carnet }}
                                     </td>
-                                    
+
                                 </tr>
                             @endforeach
                         </tbody>

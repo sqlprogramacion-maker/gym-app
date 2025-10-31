@@ -21,9 +21,9 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/equipos/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nuevo Equipo
-                            </a>
+                             <x-link-button :href="route('equipos.create')">
+                                 <i class="bi bi-plus-circle"></i> Nuevo Equipo
+                            </x-link-button>
                         </div>
                     </div>
 

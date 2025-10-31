@@ -1,5 +1,5 @@
 <x-app-layout>
-      </style>
+    </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Clientes') }}
@@ -20,9 +20,9 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <a href="/clientes/create" class="btn btn-primary">
-                                <i class="bi bi-plus-circle"></i> Nuevo Cliente
-                            </a>
+                            <x-link-button :href="route('clientes.create')">
+                                 <i class="bi bi-plus-circle"></i> Nuevo Cliente
+                            </x-link-button>
                         </div>
                     </div>
 
@@ -39,8 +39,7 @@
                                             <i class="bi bi-search"></i> Buscar
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
-                                            value="{{ $buscar }}"
-                                            placeholder="Nombre">
+                                            value="{{ $buscar }}" placeholder="Nombre">
                                     </div>
 
                                     <div class="col-md-3">
@@ -117,7 +116,8 @@
                                     <td class="flex gap-2 items-center">
                                         <a href="{{ route('clientes.show', $item) }}">info</a>
                                         <a href="{{ route('clientes.edit', $item) }}">editar</a>
-                                        <form action="{{ route('clientes.destroy', $item->id) }}" method="post" class="inline">
+                                        <form action="{{ route('clientes.destroy', $item->id) }}" method="post"
+                                            class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">Eliminar</button>
