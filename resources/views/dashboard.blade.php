@@ -68,8 +68,8 @@
                                                         {{-- Lista de clientes --}}
                                                         @if ($dia['cantidadIngresos'] > 0)
                                                             <div class="flex-grow-1 overflow-auto">
-                                                                @foreach ($dia['ingresos']->take(3) as $ingreso)
-                                                                    <div class="mb-2">
+                                                                @foreach ($dia['ingresos']->take(10) as $ingreso)
+                                                                    <div class="">
                                                                         <div
                                                                             class="d-flex align-items-center bg-success bg-opacity-10 rounded p-2">
                                                                             <div class="avatar-sm rounded-circle bg-success text-white me-2 d-flex align-items-center justify-content-center"
@@ -83,7 +83,7 @@
                                                                     </div>
                                                                 @endforeach
 
-                                                                @if ($dia['cantidadIngresos'] > 3)
+                                                                @if ($dia['cantidadIngresos'] > 10)
                                                                     <div class="text-center">
                                                                         <small class="badge bg-secondary">
                                                                             +{{ $dia['cantidadIngresos'] - 3 }}

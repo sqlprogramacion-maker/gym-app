@@ -138,6 +138,7 @@
                                     <th scope="col">Precio Pagado</th>
                                     <th scope="col">Plan </th>
                                     <th scope="col">Costo </th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -150,6 +151,7 @@
                                         <td>{{ $item->precio_pagado }}</td>
                                         <td>{{ $item->tipomembresia->nombre }}</td>
                                         <td>{{ $item->tipomembresia->precio }}</td>
+                                        <td><a href="">Pagar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
