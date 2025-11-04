@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Membresia;
 use App\Models\Pago;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class PagoController extends Controller
 {
@@ -28,7 +32,35 @@ class PagoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'fecha' => 'required|date',
+                'monto' => 'required|numeric',
+                'membresia_id' => 'required|numeric'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Error de validación',
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        Pago::create([
+            'fecha' => $request->fecha,
+            'monto' => $request->monto,
+            'membresia_id' => $request->membresia_id,
+            'user_id' => Auth::id()
+        ]);
+
+        $membresia = Membresia::findOrFail($request->membresia_id);
+
+        $membresia->update([
+            'precio_pagado' => $membresia->precio_pagado + $request->monto
+        ]);
+
+        return response()->json([
+            'message' => 'Registro guardado exitosamente'
+        ], 201);
     }
 
     /**

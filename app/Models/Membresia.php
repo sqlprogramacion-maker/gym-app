@@ -29,4 +29,18 @@ class Membresia extends Model
     public function tipomembresia(){
         return $this->belongsTo(TipoMembresia::class);
     }
+
+    public function pagos(){
+        return $this->hasMany(Pago::class);
+    }
+
+    public function getSaldoAttribute()
+    {
+        return $this->pagos()->sum('monto');
+    }
+
+    public function getSaldoPendienteAttribute(): float
+    {
+        return $this->precio - $this->saldo;
+    }
 }

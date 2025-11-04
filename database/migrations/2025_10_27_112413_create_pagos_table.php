@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->decimal('monto', 8, 2);
             $table->foreignId('membresia_id')->constrained('membresias')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -9,4 +9,10 @@ class Pago extends Model
 {
     /** @use HasFactory<\Database\Factories\PagoFactory> */
     use HasFactory;
+
+    protected $fillable = ['fecha', 'monto', 'membresia_id', 'user_id'];
+
+    public function membresia(){
+        return $this->belongsTo(Membresia::class);
+    }
 }

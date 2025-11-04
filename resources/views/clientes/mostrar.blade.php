@@ -29,101 +29,6 @@
                     <p><strong>Telefono: </strong>{{ $cliente->telefono }}</p>
                 </div>
                 <br>
-                <div>
-                    <h2>Informacion de asistencias</h2>
-                    <div class="card border-0 shadow-lg mb-5">
-                        <div class="card-header bg-gradient text-white py-3"
-                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <h4 class="mb-0 text-center">
-                                <i class="bi bi-calendar-month"></i>
-                                Calendario de Ingresos - {{ \Carbon\Carbon::now()->locale('es')->isoFormat('MMMM') }}
-                            </h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-bordered mb-0 calendario-ingresos">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th class="text-center fw-bold py-3 text-danger">Domingo</th>
-                                            <th class="text-center fw-bold py-3">Lunes</th>
-                                            <th class="text-center fw-bold py-3">Martes</th>
-                                            <th class="text-center fw-bold py-3">Miércoles</th>
-                                            <th class="text-center fw-bold py-3">Jueves</th>
-                                            <th class="text-center fw-bold py-3">Viernes</th>
-                                            <th class="text-center fw-bold py-3 text-primary">Sábado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($semanas as $semana)
-                                            <tr>
-                                                @foreach ($semana as $dia)
-                                                    <td class="p-3 {{ $dia['mesActual'] ? '' : 'bg-light bg-opacity-50' }}"
-                                                        style="height: 120px; vertical-align: top; {{ $dia['esHoy'] ? 'background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);' : '' }}">
-                                                        @if ($dia['dia'])
-                                                            <div class="d-flex flex-column h-100">
-                                                                {{-- Número del día --}}
-                                                                <div
-                                                                    class="d-flex justify-content-between align-items-center mb-2">
-                                                                    <span
-                                                                        class="badge {{ $dia['esHoy'] ? 'bg-primary' : 'bg-secondary' }} rounded-pill px-3 py-2">
-                                                                        {{ $dia['dia'] }}
-                                                                    </span>
-                                                                    @if ($dia['cantidadIngresos'] > 0)
-                                                                        <span
-                                                                            class="badge bg-success rounded-pill px-3 py-2">
-                                                                            <i class="bi bi-person-fill"></i>
-                                                                            {{ $dia['cantidadIngresos'] }}
-                                                                        </span>
-                                                                    @endif
-                                                                </div>
-
-                                                                {{-- Lista de clientes --}}
-                                                                @if ($dia['cantidadIngresos'] > 0)
-                                                                    <div class="flex-grow-1 overflow-auto">
-                                                                        @foreach ($dia['ingresos']->take(3) as $ingreso)
-                                                                            <div class="mb-2">
-                                                                                <div
-                                                                                    class="d-flex align-items-center bg-success bg-opacity-10 rounded p-2">
-                                                                                    <div class="avatar-sm rounded-circle bg-success text-white me-2 d-flex align-items-center justify-content-center"
-                                                                                        style="width: 28px; height: 28px; font-size: 0.8rem;">
-                                                                                        {{ substr($ingreso->cliente->nombre, 0, 1) }}
-                                                                                    </div>
-                                                                                    <small
-                                                                                        class="text-truncate fw-semibold">
-                                                                                        {{ Str::limit($ingreso->cliente->nombre, 12) }}
-                                                                                    </small>
-                                                                                </div>
-                                                                            </div>
-                                                                        @endforeach
-
-                                                                        @if ($dia['cantidadIngresos'] > 3)
-                                                                            <div class="text-center">
-                                                                                <small class="badge bg-secondary">
-                                                                                    +{{ $dia['cantidadIngresos'] - 3 }}
-                                                                                    más
-                                                                                </small>
-                                                                            </div>
-                                                                        @endif
-                                                                    </div>
-                                                                @else
-                                                                    <div
-                                                                        class="d-flex align-items-center justify-content-center flex-grow-1">
-                                                                        <small class="text-muted">Sin ingresos</small>
-                                                                    </div>
-                                                                @endif
-                                                            </div>
-                                                        @endif
-                                                    </td>
-                                                @endforeach
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
 
                 <div>
                     <h2>Informacion de membresias</h2>
@@ -151,7 +56,30 @@
                                         <td>{{ $item->precio_pagado }}</td>
                                         <td>{{ $item->tipomembresia->nombre }}</td>
                                         <td>{{ $item->tipomembresia->precio }}</td>
-                                        <td><a href="">Pagar</a></td>
+                                        <td>
+                                            <button type="button" class="btn-modal" data-item-id="{{ $item->id }}"
+                                                data-bs-toggle="modal" data-bs-target="#formModal">
+                                                Registrar Pago
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" style="align-content: center"><strong>historial de
+                                                pagos</strong></td>
+                                    </tr>
+                                    @foreach ($item->pagos as $pago)
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2">{{ $pago->fecha }}</td>
+                                            <td colspan="2">
+                                                {{ $pago->monto }} Bs.
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <td><strong>Saldo: </strong> {{ $item->pagos->sum('monto') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -165,4 +93,87 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Datos Adicionales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="registroPagoForm">
+                    <div class="modal-body">
+                        @csrf
+                        <input type="hidden" name="membresia_id" id="modalItemId">
+
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" name="fecha" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="monto" class="form-label">Monto</label>
+                            <input type="text" class="form-control" name="monto"></input>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('formModal');
+        const form = document.getElementById('registroPagoForm');
+        const itemIdInput = document.getElementById('modalItemId');
+
+        // Manejar clic en botones del modal
+        document.querySelectorAll('.btn-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-item-id');
+                itemIdInput.value = itemId;
+            });
+        });
+
+        // Manejar envío del formulario
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+
+            const formulario = e.target;
+            // 1. CAPTURAR DATOS
+            const datos = new FormData(formulario);
+
+            // **NOTA IMPORTANTE:**
+            // Cuando usas FormData, NO necesitas establecer el 'Content-Type': 'multipart/form-data'. 
+            // El navegador lo hace automáticamente, incluyendo los límites de la data.
+
+            fetch('/pagos', {
+                    method: 'POST',
+                    headers: {
+                        // Es crucial que incluyas tu token CSRF aquí si Laravel lo requiere
+                        'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]')
+                            .content
+                    },
+                    body: datos // Envías el objeto FormData directamente
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Registro guardado:', data);
+                    window.location.reload();
+                    //registro exitoso
+                })
+                .catch(error => {
+                    console.error('Error al enviar:', error);
+                    // Manejo de error
+                });
+        });
+
+    })
+</script>

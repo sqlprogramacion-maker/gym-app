@@ -6,6 +6,7 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\MembresiaController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipoMembresiaController;
@@ -41,8 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/tipomembresia/{tipomembresia}/edit', [TipoMembresiaController::class, 'edit'])->name('tipomembresia.edit');
 
     Route::resource('/asistencias', AsistenciaController::class);
+   
     Route::resource('/membresias', MembresiaController::class);
     Route::resource('/mantenimientos', Mantenimiento::class);
+    
+    Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
+    
 });
 
 Route::get('/123', function () {
@@ -56,8 +61,6 @@ Route::get('/home', function () {
 Route::get('/123', function () {
     return view('welcome');
 });
-
-
 
 
 require __DIR__ . '/auth.php';
