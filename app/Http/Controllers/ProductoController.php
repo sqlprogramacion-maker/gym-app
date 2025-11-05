@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
@@ -100,5 +102,17 @@ class ProductoController extends Controller
         $producto->delete();
 
         return redirect()->route('productos.index')->with('mensaje', 'Eliminado exitosamente');
+    }
+
+    //productos
+    public function pdf(){
+        $data = [
+            'productos' => Producto::all(),
+            'user' => Auth::user()
+        ];
+
+        $pdf = Pdf::loadView('productos.pdf', $data);
+
+        return $pdf->stream();
     }
 }

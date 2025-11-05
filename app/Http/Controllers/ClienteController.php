@@ -7,6 +7,7 @@ use App\Models\Cliente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClienteController extends Controller
 {
@@ -184,5 +185,17 @@ class ClienteController extends Controller
         $cliente->delete();
 
         return redirect()->route('clientes.index')->with('mensaje', 'Cliente eliminado');
+    }
+
+    //generar reporte
+    public function pdf(){
+        $data = [
+            'user' => Auth::user(),
+            'clientes' => Cliente::all()
+        ];
+        
+        $pdf = Pdf::loadView('clientes.pdf', $data);
+
+        return $pdf->stream();
     }
 }

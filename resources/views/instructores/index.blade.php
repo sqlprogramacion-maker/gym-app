@@ -20,6 +20,9 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
+                            <x-link-button :href="route('instructores.pdf')">
+                                 <i class="bi bi-plus-circle"></i> Generar Reporte
+                            </x-link-button>
                             <x-link-button :href="route('instructores.create')">
                                 <i class="bi bi-plus-circle"></i> Nuevo Entrenador
                             </x-link-button>

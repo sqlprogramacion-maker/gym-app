@@ -16,13 +16,16 @@
                     <div class="row page-header">
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
-                               <i class="bi bi-collection-fill"></i>
+                                <i class="bi bi-collection-fill"></i>
                                 Gestión de Equipos
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                             <x-link-button :href="route('equipos.create')">
-                                 <i class="bi bi-plus-circle"></i> Nuevo Equipo
+                            <x-link-button :href="route('equipos.pdf')">
+                                <i class="bi bi-plus-circle"></i> Generar Reporte
+                            </x-link-button>
+                            <x-link-button :href="route('equipos.create')">
+                                <i class="bi bi-plus-circle"></i> Nuevo Equipo
                             </x-link-button>
                         </div>
                     </div>

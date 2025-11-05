@@ -27,7 +27,7 @@
                             <select class="form-select" aria-label="Default select example" name="cliente_id">
                                 <option selected>Seleccionar cliente</option>
                                 @foreach ($clientes as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nombre }} - {{ $item->nombre }} - {{ $item->carnet }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->nombre }} - {{ $item->apellido }} - {{ $item->carnet }}</option>
                                 @endforeach
                             </select>
                             @error('cliente_id')

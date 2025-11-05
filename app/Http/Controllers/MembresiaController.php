@@ -65,9 +65,14 @@ class MembresiaController extends Controller
             'cliente_id' => 'required|integer'
         ]));
 
+        
         $tipomembresia = TipoMembresia::findOrFail($membresia->tipomembresia_id);
 
         $membresia->fecha_fin = Carbon::parse($membresia->fecha_inicio)->addMonths($tipomembresia->meses);
+
+        if($membresia->precio_pagado == $tipomembresia->precio){
+            $membresia->estado = 'activo';
+        }
 
         $membresia->save();
 

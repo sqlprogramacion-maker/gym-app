@@ -24,13 +24,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/clientes/pdf', [ClienteController::class, 'pdf'])->name('clientes.pdf');
     Route::resource('/clientes', ClienteController::class);
+    Route::get('/instructores/pdf', [InstructorController::class, 'pdf'])->name('instructores.pdf');
     Route::resource('/instructores', InstructorController::class)->parameters([
         'instructores' => 'instructor'
     ]);;
     
+    Route::get('/equipos/pdf', [EquipoController::class, 'pdf'])->name('equipos.pdf');
     Route::resource('/equipos', EquipoController::class);
     Route::post('/equipos/{equipo}/mantenimiento', [EquipoController::class, 'mantenimientoStore'])->name('equipos.mantenimiento.store');
+    Route::get('/productos/pdf', [ProductoController::class, 'pdf'])->name('productos.pdf');
     Route::resource('/productos', ProductoController::class);
 
     Route::get('/tipomembresia', [TipoMembresiaController::class, 'index'])->name('tipomembresia.index');

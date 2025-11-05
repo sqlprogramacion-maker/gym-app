@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instructor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InstructorController extends Controller
 {
@@ -103,5 +105,16 @@ class InstructorController extends Controller
         $instructor->delete();
 
         return redirect()->route('instructores.index')->with('mensaje', 'Eliminado exitosamente');
+    }
+
+    public function pdf(){
+        $data = [
+            'entrenadores' => Instructor::all(),
+            'user' => Auth::user()
+        ];
+
+        $pdf = Pdf::loadView('instructores.pdf', $data);
+
+        return $pdf->stream();
     }
 }

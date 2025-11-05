@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipo;
 use App\Models\Mantenimiento;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -133,5 +134,17 @@ class EquipoController extends Controller
         return response()->json([
             'mensaje' => 'registrado exitosamente',
         ], 201);
+    }
+
+    //generar reportes
+    public function pdf(){
+        $data = [
+            'equipos' => Equipo::all(),
+            'user' => Auth::user()
+        ];
+
+        $pdf = Pdf::loadView('equipos.pdf', $data);
+
+        return $pdf->stream();
     }
 }
