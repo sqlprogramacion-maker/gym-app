@@ -53,34 +53,43 @@
                                         <td>{{ date('d/m/Y', strtotime($item->fecha_inicio)) }} al
                                             {{ date('d/m/Y', strtotime($item->fecha_fin)) }}</td>
                                         <td>{{ $item->estado }}</td>
-                                        <td>{{ $item->precio_pagado }}</td>
+                                        <td>{{ $item->precio_pagado }} Bs.</td>
                                         <td>{{ $item->tipomembresia->nombre }}</td>
-                                        <td>{{ $item->tipomembresia->precio }}</td>
+                                        <td>{{ $item->tipomembresia->precio }} Bs.</td>
                                         <td>
-                                            <button type="button" class="btn-modal" data-item-id="{{ $item->id }}"
+                                            <button type="button" class="btn-modal underline" data-item-id="{{ $item->id }}"
                                                 data-bs-toggle="modal" data-bs-target="#formModal">
                                                 Registrar Pago
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td colspan="7" style="align-content: center"><strong>historial de
-                                                pagos</strong></td>
-                                    </tr>
-                                    @foreach ($item->pagos as $pago)
+                                    @if (count($item->pagos) > 0)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td colspan="2">{{ $pago->fecha }}</td>
-                                            <td colspan="2">
-                                                {{ $pago->monto }} Bs.
-                                            </td>
+                                            <td colspan="7" style="align-content: center"><strong>historial de
+                                                    pagos</strong></td>
                                         </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td><strong>Saldo: </strong> {{ $item->pagos->sum('monto') }}</td>
-                                    </tr>
+                                        @foreach ($item->pagos as $pago)
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td colspan="2">{{ $pago->fecha }}</td>
+                                                <td colspan="2">
+                                                    {{ $pago->monto }} Bs.
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <tr class="border-b-2 border-black">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td colspan="2"><strong>Saldo: </strong>
+                                                {{ $item->tipomembresia->precio - $item->precio_pagado }} Bs.</td>
+                                        </tr>
+                                    @endif
+                                    
                                 @endforeach
                             </tbody>
                         </table>
@@ -163,11 +172,17 @@
                     },
                     body: datos // Envías el objeto FormData directamente
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        // **LA RECARGA DE PÁGINA OCURRE AQUÍ**
+                        window.location.reload();
+                        // Si quieres redirigir a otra URL: window.location.href = '/nueva-ruta';
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    console.log('Registro guardado:', data);
-                    window.location.reload();
-                    //registro exitoso
+                    //if(response.ok)
+                    console.log('Registro guardado:');
                 })
                 .catch(error => {
                     console.error('Error al enviar:', error);

@@ -32,7 +32,12 @@
                             <p><strong>Registrado por: </strong>{{ $equipo->user->name }}</p>
                         </div>
                         <br>
-                        <div><a href="/equipos">Regresar</a> <button id="openModalMantenimiento" class="btn btn-primary">Registrar Mantenimiento</button>
+                        <div>
+                            <a href="/equipos">Regresar</a>
+
+                            <button type="button" class="btn-modal underline" data-bs-toggle="modal" data-bs-target="#formModal">
+                                Registrar Mantenimiento
+                            </button>
                         </div>
                         <h2><strong>Historial de mantenimiento</strong></h2>
                         <table class="table">
@@ -40,6 +45,7 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Descripcion</th>
+                                    <th scope="col">Tipo</th>
                                     <th scope="col">Fecha</th>
                                     <th scope="col">costo</th>
                                 </tr>
@@ -49,6 +55,7 @@
                                     <tr>
                                         <th scope="row">{{ $item->id }}</th>
                                         <td>{{ $item->descripcion }}</td>
+                                        <td>{{ $item->tipo_mantenimiento }}</td>
                                         <td>{{ $item->fecha }}</td>
                                         <td>{{ $item->costo }} Bs.</td>
                                     </tr>
@@ -61,15 +68,21 @@
         </div>
     </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <!-- Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Registrar mantenimiento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Agregar Datos Adicionales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="{{ route('equipos.mantenimiento.store', $equipo->id) }}" method="post">
+                <form id="registroMantenimientoForm">
+                    <div id="error-message" class="alert alert-danger" style="display: none;">
+                        <strong id="error-title"></strong>
+                        <ul id="error-list"></ul>
+                    </div>
+                    <div class="modal-body">
                         @csrf
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripcion</label>
@@ -91,8 +104,8 @@
                             <select class="form-select" aria-label="Default select example" id="estado"
                                 name="tipo_mantenimiento">
                                 <option selected>Selecciona el tipo</option>
-                                <option value="0">Preventivo</option>
-                                <option value="1">Correctivo</option>
+                                <option value="preventivo">Preventivo</option>
+                                <option value="correctivo">Correctivo</option>
                             </select>
                             @error('tipo_mantenimiento')
                                 <small>{{ $message }}</small>
@@ -106,28 +119,75 @@
                                 <small>{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" name="cliente_id" id="cliente_id"
-                                value="{{ old('cliente_id', $equipo->id) }}" style="display: none">
-                        </div>
-                        <div>
-                            <button type="submit">Registrar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const openModalButton = document.getElementById('openModalMantenimiento');
-            const myModalElement = document.getElementById('myModal');
-            const myModal = new bootstrap.Modal(myModalElement);
+        document.getElementById('registroMantenimientoForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita el envío tradicional del formulario
 
-            openModalButton.addEventListener('click', function() {
-                myModal.show();
-            });
+            const formulario = e.target;
+            // 1. CAPTURAR DATOS
+            const datos = new FormData(formulario);
+
+            // **NOTA IMPORTANTE:**
+            // Cuando usas FormData, NO necesitas establecer el 'Content-Type': 'multipart/form-data'. 
+            // El navegador lo hace automáticamente, incluyendo los límites de la data.
+
+            fetch('/equipos/{{ $equipo->id }}/mantenimiento', {
+                    method: 'POST',
+                    headers: {
+                        // Es crucial que incluyas tu token CSRF aquí si Laravel lo requiere
+                        'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: datos // Envías el objeto FormData directamente
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Registro guardado:', data);
+                    if (data.mensaje === 'Error de validacion') {
+                        mostrarErrores(data.errors);
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error al enviar:', error);
+                    //error 
+                });
         });
+
+        function mostrarErrores(errors) {
+            const errorDiv = document.getElementById('error-message');
+            const errorTitle = document.getElementById('error-title');
+            const errorList = document.getElementById('error-list');
+
+            errorTitle.textContent = 'Error de validación';
+            errorList.innerHTML = '';
+
+            // Recorrer todos los campos con errores
+            for (const campo in errors) {
+                if (errors.hasOwnProperty(campo)) {
+                    errors[campo].forEach(error => {
+                        const li = document.createElement('li');
+                        li.textContent = `${campo}: ${error}`;
+                        errorList.appendChild(li);
+                    });
+                }
+            }
+
+            errorDiv.style.display = 'block';
+        }
     </script>
 </x-app-layout>

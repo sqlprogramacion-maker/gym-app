@@ -13,7 +13,7 @@ class Cliente extends Model
     protected $fillable = ['nombre', 'apellido', 'edad', 'peso', 'carnet', 'telefono', 'talla', 'user_id'];
 
     public function membresias(){
-        return $this->hasMany(Membresia::class);
+        return $this->hasMany(Membresia::class)->orderBy('created_at', 'desc');;
     }
 
     public function asistencias(){

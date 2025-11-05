@@ -6,10 +6,11 @@ use App\Models\Equipo;
 use App\Models\Mantenimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class EquipoController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
@@ -19,10 +20,10 @@ class EquipoController extends Controller
 
         $query = Equipo::query();
 
-        if($buscar){
-            $query->where(function($q) use ($buscar){
+        if ($buscar) {
+            $query->where(function ($q) use ($buscar) {
                 $q->where('descripcion', 'LIKE', "%{$buscar}%")
-                ->orWhere('marca', 'LIKE', "%{$buscar}%");
+                    ->orWhere('marca', 'LIKE', "%{$buscar}%");
             });
         }
 
@@ -105,18 +106,32 @@ class EquipoController extends Controller
         return redirect()->route('equipos.index')->with('mensaje', 'Eliminado exitosamente');
     }
 
-    public function mantenimientoStore(Request $request, int $id){
-        $mantenimiento = new Mantenimiento($request->validate([
-            'descripcion' => 'required',
-            'costo' => 'required|numeric',
-            'fecha' => 'required|date',
-            'tipo_mantenimiento' => 'required|numeric'
-        ]));
+    public function mantenimientoStore(Request $request, int $id)
+    {
+        try {
+            $request->validate([
+                'descripcion' => 'required',
+                'costo' => 'required|numeric',
+                'fecha' => 'required|date',
+                'tipo_mantenimiento' => 'required'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'mensaje' => 'Error de validacion',
+                'errors' => $e->errors()
+            ], 422);
+        }
+        
+        Mantenimiento::create([
+            'descripcion' => $request->descripcion,
+            'costo' => $request->costo,
+            'fecha' => $request->fecha,
+            'tipo_mantenimiento' => $request->tipo_mantenimiento,
+            'equipo_id' => $id
+        ]);
 
-        $mantenimiento->equipo_id = $id;
-
-        $mantenimiento->save();
-
-        return redirect()->route('equipos.show', $id)->with('mensaje', 'Registrado existamente');
+        return response()->json([
+            'mensaje' => 'registrado exitosamente',
+        ], 201);
     }
 }

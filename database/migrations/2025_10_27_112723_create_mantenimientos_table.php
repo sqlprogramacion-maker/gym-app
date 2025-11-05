@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('costo', 8, 2);
             $table->date('fecha');
-            $table->tinyInteger('tipo_mantenimiento');
+            $table->string('tipo_mantenimiento')->default('preventivo');
             $table->string('descripcion');
             $table->foreignId('equipo_id')->constrained('equipos')->onDelete('cascade');
             $table->timestamps();
