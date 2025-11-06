@@ -9,4 +9,11 @@ class Venta extends Model
 {
     /** @use HasFactory<\Database\Factories\VentaFactory> */
     use HasFactory;
+
+    protected $fillable = ['razon_social', 'nit', 'total', 'cliente_id', 'user_id'];
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
 }

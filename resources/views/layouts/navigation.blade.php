@@ -57,6 +57,11 @@
                             {{ __('ASISTENCIAS') }}
                         </x-nav-link>
 
+                        <x-nav-link :href="route('ventas.index')" :active="request()->routeIs('ventas.index')"
+                            class="text-white px-2 py-1 rounded font-bold">
+                            {{ __('VENTAS') }}
+                        </x-nav-link>
+
                         @if (auth()->user()->isAdministrador())
                             <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')"
                                 class="text-white px-2 py-1 rounded font-bold">

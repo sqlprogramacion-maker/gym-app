@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TipoMembresiaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VentaController;
 use App\Models\Mantenimiento;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'role:administrador,recepcionista'])->group(function 
     Route::resource('/asistencias', AsistenciaController::class);
     Route::resource('/membresias', MembresiaController::class);
     Route::post('/pagos', [PagoController::class, 'store'])->name('pagos.store');
+
+    Route::resource('/ventas', VentaController::class);
 });
 
 Route::get('/123', function () {
