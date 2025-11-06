@@ -21,9 +21,12 @@
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            <x-link-button :href="route('equipos.pdf')">
-                                <i class="bi bi-plus-circle"></i> Generar Reporte
-                            </x-link-button>
+                            @if (auth()->user()->isAdministrador())
+                                <x-link-button :href="route('equipos.pdf')">
+                                    <i class="bi bi-plus-circle"></i> Generar Reporte
+                                </x-link-button>
+                            @endif
+
                             <x-link-button :href="route('equipos.create')">
                                 <i class="bi bi-plus-circle"></i> Nuevo Equipo
                             </x-link-button>

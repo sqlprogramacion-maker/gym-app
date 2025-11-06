@@ -2,7 +2,7 @@
     </style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Clientes') }}
+            {{ __('Usuarios') }}
         </h2>
     </x-slot>
 
@@ -16,18 +16,14 @@
                         <div class="col-md-6">
                             <h1 class="fs-4 fw-bold">
                                 <i class="bi bi-people-fill text-primary"></i>
-                                Gestión de Clientes
+                                Gestión de Usuarios
                             </h1>
                         </div>
                         <div class="col-md-6 text-end d-flex align-items-center justify-content-end">
-                            @if (auth()->user()->isAdministrador())
-                                <x-link-button :href="route('clientes.pdf')">
-                                    <i class="bi bi-plus-circle"></i> Generar Reporte
-                                </x-link-button>
-                            @endif
-
-                            <x-link-button :href="route('clientes.create')">
-                                <i class="bi bi-plus-circle"></i> Nuevo Cliente
+                             
+                            
+                            <x-link-button :href="route('usuarios.create')">
+                                 <i class="bi bi-plus-circle"></i> Nuevo Usuario
                             </x-link-button>
                         </div>
                     </div>
@@ -38,7 +34,7 @@
                             <h5 class="card-title mb-3">
                                 <i class="bi bi-funnel"></i> Filtros de búsqueda
                             </h5>
-                            <form action="/clientes" method="GET">
+                            <form action="/usuarios" method="GET">
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label for="buscar" class="form-label">
@@ -46,17 +42,6 @@
                                         </label>
                                         <input type="text" class="form-control" id="buscar" name="buscar"
                                             value="{{ $buscar }}" placeholder="Nombre">
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label for="estado" class="form-label">
-                                            <i class="bi bi-toggle-on"></i> Estado
-                                        </label>
-                                        <select class="form-select" id="estado" name="estado">
-                                            <option value="">Todos los estados</option>
-                                            <option value="1">Activo</option>
-                                            <option value="0">Inactivo</option>
-                                        </select>
                                     </div>
 
                                     <div class="col-md-2">
@@ -74,7 +59,7 @@
                                         <button type="submit" class="btn btn-light flex-fill">
                                             <i class="bi bi-search"></i> Buscar
                                         </button>
-                                        <a href="/clientes" class="btn btn-light">
+                                        <a href="/usuarios" class="btn btn-light">
                                             <i class="bi bi-arrow-clockwise"></i>
                                         </a>
                                     </div>
@@ -87,42 +72,29 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Carnet</th>
-                                <th scope="col">Edad</th>
-                                <th scope="col">Peso (Kg)</th>
-                                <th scope="col">Talla (cm)</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Rol</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clientes as $item)
+                            @foreach ($usuarios as $item)
                                 <tr scope="row">
                                     <td>
                                         {{ $item->id }}
                                     </td>
                                     <td>
-                                        {{ $item->nombre }}
+                                        {{ $item->name }}
                                     </td>
                                     <td>
-                                        {{ $item->apellido }}
+                                        {{ $item->email }}
                                     </td>
                                     <td>
-                                        {{ $item->carnet }}
-                                    </td>
-                                    <td>
-                                        {{ $item->edad }}
-                                    </td>
-                                    <td>
-                                        {{ $item->peso }}
-                                    </td>
-                                    <td>
-                                        {{ $item->talla }}
+                                        {{ $item->rol }}
                                     </td>
                                     <td class="flex gap-2 items-center">
-                                        <a href="{{ route('clientes.show', $item) }}">info</a>
-                                        <a href="{{ route('clientes.edit', $item) }}">editar</a>
-                                        <form action="{{ route('clientes.destroy', $item->id) }}" method="post"
+                                        <a href="{{ route('usuarios.edit', $item) }}">editar</a>
+                                        <form action="{{ route('usuarios.destroy', $item->id) }}" method="post"
                                             class="inline">
                                             @csrf
                                             @method('DELETE')
@@ -136,7 +108,7 @@
                     </table>
 
                     <div>
-                        {{ $clientes->links() }}
+                        {{ $usuarios->links() }}
                     </div>
                 </div>
             </body>

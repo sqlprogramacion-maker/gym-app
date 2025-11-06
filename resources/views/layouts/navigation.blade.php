@@ -5,46 +5,64 @@
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <a href="{{ route('dashboard') }}" class="bg-red-600 text-white text-lg border border-black px-4 py-2 rounded shadow">
+                        <a href="{{ route('dashboard') }}"
+                            class="bg-red-600 text-white text-lg border border-black px-4 py-2 rounded shadow">
                             GYM FORCE
                         </a>
                     </div>
 
                     <!-- Navigation Links -->
                     <div class="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                            class="text-white px-2 py-1 rounded font-bold">                     
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white px-2 py-1 rounded font-bold">
                             {{ __('INICIO') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
-                            {{ __('CLIENTES') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('instructores.index')" :active="request()->routeIs('instructores.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
-                            {{ __('ENTRENADORES') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('equipos.index')" :active="request()->routeIs('equipos.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
-                            {{ __('EQUIPOS') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('productos.index')" :active="request()->routeIs('dashboard')"
-                             class="text-white px-2 py-1 rounded font-bold">
-                            {{ __('PRODUCTOS') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('tipomembresia.index')" :active="request()->routeIs('tipomembresia.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
-                            {{ __('TIPO MEMBRESIAS') }}
-                        </x-nav-link>
+                        @if (auth()->user()->hasAnyRole(['administrador', 'recepcionista']))
+                            <x-nav-link :href="route('clientes.index')" :active="request()->routeIs('clientes.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('CLIENTES') }}
+                            </x-nav-link>
+                        @endif
+                        @if (auth()->user()->isAdministrador())
+                            <x-nav-link :href="route('instructores.index')" :active="request()->routeIs('instructores.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('ENTRENADORES') }}
+                            </x-nav-link>
+                        @endif
+                        @if (auth()->user()->isAdministrador())
+                            <x-nav-link :href="route('equipos.index')" :active="request()->routeIs('equipos.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('EQUIPOS') }}
+                            </x-nav-link>
+                        @endif
+                        @if (auth()->user()->hasAnyRole(['administrador', 'recepcionista']))
+                            <x-nav-link :href="route('productos.index')" :active="request()->routeIs('productos.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('PRODUCTOS') }}
+                            </x-nav-link>
+                        @endif
+                        @if (auth()->user()->isAdministrador())
+                            <x-nav-link :href="route('tipomembresia.index')" :active="request()->routeIs('tipomembresia.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('TIPO MEMBRESIAS') }}
+                            </x-nav-link>
+                        @endif
+
                         <x-nav-link :href="route('membresias.index')" :active="request()->routeIs('membresias.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
+                            class="text-white px-2 py-1 rounded font-bold">
                             {{ __('MEMBRESIAS') }}
                         </x-nav-link>
+
                         <x-nav-link :href="route('asistencias.index')" :active="request()->routeIs('asistencias.index')"
-                             class="text-white px-2 py-1 rounded font-bold">
+                            class="text-white px-2 py-1 rounded font-bold">
                             {{ __('ASISTENCIAS') }}
                         </x-nav-link>
 
+                        @if (auth()->user()->isAdministrador())
+                            <x-nav-link :href="route('usuarios.index')" :active="request()->routeIs('usuarios.index')"
+                                class="text-white px-2 py-1 rounded font-bold">
+                                {{ __('USUARIOS') }}
+                            </x-nav-link>
+                        @endif
                     </div>
                 </div>
 
